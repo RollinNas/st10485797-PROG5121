@@ -1,131 +1,134 @@
-
 package Part1;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 
-
+// Registration class to handle user registration with validations
 public class Registration {
+    // User details
     private String firstName;
     private String lastName;
-    private String password;
+    private String password; // stored but not displayed for security reasons
     private String username;
     private String phoneNumber; 
-    
 
-    public void startRegistration() {
-        // Get first name
-        firstName = JOptionPane.showInputDialog("Please enter your first name");
-        
-        // Get last name
-        lastName = JOptionPane.showInputDialog("Please enter your last name");
-        
-        // Get username with validation
-        username = getValidUsername();
-        
-        // Get password with validation + confirmation
-        password = getValidPassword();
-        
-        // Get phone number with validation (+27 and 9 digits)
-        phoneNumber = getValidPhoneNumber();
-        
-        // Show successful registration message
-        JOptionPane.showMessageDialog(null, 
-            "✅ Registration Successful!\n" +
-            "First Name: " + firstName + "\n" +
-            "Last Name: " + lastName + "\n" +
-            "Username: " + username + "\n" +
-            "Phone: " + phoneNumber);
+    // Getters and Setters
+    public String getFirstName() {
+        return firstName; 
+    }
+    public void setFirstName(String firstName) { 
+        this.firstName = firstName; 
     }
 
-    //Username
+    public String getLastName() {
+        return lastName; 
+    }
+    public void setLastName(String lastName) { 
+        this.lastName = lastName; 
+    }
+    
+    public String getPassword() { 
+        return password; 
+    }
+    public void setPassword(String password) { 
+        this.password = password; 
+    }
+
+    public String getUsername() { 
+        return username; 
+    }
+    public void setUsername(String username) { 
+        this.username = username; 
+    }
+
+    public String getPhoneNumber() { 
+        return phoneNumber; 
+    }
+    public void setPhoneNumber(String phoneNumber) { 
+        this.phoneNumber = phoneNumber; 
+    }
+
+    // Start Registration process
+    public void startRegistration() {
+        
+        String firstName = JOptionPane.showInputDialog("Please enter your first name");
+        if (firstName == null) return; // user cancelled
+
+        String lastName = JOptionPane.showInputDialog("Please enter your last name");
+        if (lastName == null) return; // user cancelled
+
+        // Get username with validation
+        String username = getValidUsername();
+        if (username == null) return; // user cancelled
+        JOptionPane.showMessageDialog(null, "Username successfully captured");
+
+        // Get password with validation
+        String password = getValidPassword();
+        if (password == null) return; // user cancelled
+        JOptionPane.showMessageDialog(null, "Password successfully captured");
+
+        // Get phone number with validation
+        String phoneNumber = getValidPhoneNumber();
+        if (phoneNumber == null) return; // user cancelled
+        JOptionPane.showMessageDialog(null, "Cell phone number successfully added");
+
+        // Store details in instance variables
+        setFirstName(firstName);
+        setLastName(lastName);
+        setUsername(username);
+        setPassword(password);
+        setPhoneNumber(phoneNumber);
+
+        // Show successful registration message (without password for security)
+        JOptionPane.showMessageDialog(null,
+                "✅ Registration Successful!\n" +
+                        "First Name: " + firstName + "\n" +
+                        "Last Name: " + lastName + "\n" +
+                        "Username: " + username + "\n" +
+                        "Phone: " + phoneNumber);
+    }
+
+    // Username validation with loop
     private String getValidUsername() {
         String username;
         do {
             username = JOptionPane.showInputDialog(
-                "Enter username (must be ≤5 characters and contain '_'):");
-        } while (!isValidUsername(username));
+                    "Enter username (-must contain an underscore \n -must be no more than five characters long):");
+            if (username == null) return null; // handle cancel
+            if (!Login.checkUserName(username)) {
+                JOptionPane.showMessageDialog(null, "❌ Invalid username. Must contain '_' and be ≤ 5 characters.");
+                username = null; // force retry
+            }
+        } while (username == null);
         return username;
     }
 
-    private boolean isValidUsername(String username) {
-        if (username == null || username.length() > 5 || !username.contains("_")) {
-            JOptionPane.showMessageDialog(null,
-                " Invalid username!\nUsername must be ≤5 characters and contain '_'");
-            return false;
-        }
-        return true;
-    }
-
-    //Password (Hidden Input + Confirmation)
+    // Password validation with loop
     private String getValidPassword() {
         String password;
-        String confirmPassword;
         do {
-            password = askHiddenPassword("Enter password (≥8 chars, must contain uppercase, number, special char):");
-            if (!isValidPassword(password)) continue;
-            
-            confirmPassword = askHiddenPassword("Confirm your password:");
-            if (!password.equals(confirmPassword)) {
-                JOptionPane.showMessageDialog(null, " Passwords do not match! Please try again.");
-                password = null; // reset to trigger retry
+            password = JOptionPane.showInputDialog(
+                    "Enter password (≥8 chars, must contain uppercase, number, special char):");
+            if (password == null) return null; // handle cancel
+            if (!Login.checkPasswordComplexity(password)) {
+                JOptionPane.showMessageDialog(null, "❌ Password not complex enough. Try again.");
+                password = null; // force retry
             }
-        } while (password == null || !isValidPassword(password));
+        } while (password == null);
         return password;
     }
 
-    private String askHiddenPassword(String message) {
-        JPasswordField pf = new JPasswordField();
-        pf.setEchoChar('*');
-        int okCxl = JOptionPane.showConfirmDialog(null, pf, 
-                 message, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (okCxl == JOptionPane.OK_OPTION) {
-            return new String(pf.getPassword());
-        } else {
-            return "";
-        }
-    }
-
-    private boolean isValidPassword(String password) {
-        if (password == null || password.length() < 8) {
-            JOptionPane.showMessageDialog(null,
-                " Password must be at least 8 characters long.");
-            return false;
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            JOptionPane.showMessageDialog(null,
-                " Password must contain at least one uppercase letter.");
-            return false;
-        }
-        if (!password.matches(".*[0-9].*")) {
-            JOptionPane.showMessageDialog(null,
-                " Password must contain at least one number.");
-            return false;
-        }
-        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-            JOptionPane.showMessageDialog(null,
-                " Password must contain at least one special character.");
-            return false;
-        }
-        return true;
-    }
-
-    // ------------------ Phone Number (+27xxxxxxxxx) ------------------
+    // Phone number validation with loop
     private String getValidPhoneNumber() {
         String phone;
         do {
             phone = JOptionPane.showInputDialog(
-                "Enter phone number (must start with +27 and be followed by 9 digits):");
-        } while (!isValidPhoneNumber(phone));
+                    "Enter phone number (must start with +27 and be followed by 9 digits):");
+            if (phone == null) return null; // handle cancel
+            if (!Login.checkCellPhoneNumber(phone)) {
+                JOptionPane.showMessageDialog(null, "❌ Invalid phone number format. Try again.");
+                phone = null; // force retry
+            }
+        } while (phone == null);
         return phone;
-    }
-
-    private boolean isValidPhoneNumber(String phone) {
-        if (phone == null || !phone.matches("\\+27\\d{9}")) {
-            JOptionPane.showMessageDialog(null,
-                " Invalid phone number!\nIt must start with +27 and be followed by 9 digits (e.g., +27831234567).");
-            return false;
-        }
-        return true;
     }
 }
