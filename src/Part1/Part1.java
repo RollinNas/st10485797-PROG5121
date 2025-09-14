@@ -27,21 +27,21 @@ public class Part1 {
 
             // Handle user choice
             if (choice == 0) { // Register
-                JOptionPane.showMessageDialog(null, "You chose to Register!");
+                JOptionPane.showMessageDialog(null, "You chose to Register!", "Registration", JOptionPane.INFORMATION_MESSAGE);
                 Registration newUser = new Registration();
                 newUser.startUserRegistration();
                 if (newUser.getUsername() != null) {
                     users.add(newUser); // Add the new user to the list
                 }
             } else if (choice == 1) { // begin Login
-                JOptionPane.showMessageDialog(null, "You chose to Login!");
+                JOptionPane.showMessageDialog(null, "You chose to Login!", "Login", JOptionPane.INFORMATION_MESSAGE);
                 if (users.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No users registered yet. Please register first.");
+                    JOptionPane.showMessageDialog(null, "No users registered yet. Please register first.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     login.startLogin(users); // Pass the list of users
                 }
             } else { // Exit or dialog closed
-                JOptionPane.showMessageDialog(null, "Goodbye!");
+                JOptionPane.showMessageDialog(null, "Goodbye!", "Exit", JOptionPane.INFORMATION_MESSAGE);
                 System.exit(0);
             }
         }

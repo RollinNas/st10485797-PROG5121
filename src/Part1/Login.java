@@ -13,9 +13,9 @@ public class Login {
 
         // Prompt for username until match found
         while (true) {
-            username = JOptionPane.showInputDialog("Enter your username:");
+            username = JOptionPane.showInputDialog(null,"Enter your username:","User input", JOptionPane.QUESTION_MESSAGE   );
             if (username == null) { // handle cancel
-                JOptionPane.showMessageDialog(null, "Login canceled.");
+                JOptionPane.showMessageDialog(null, "Login canceled.", "System Notification", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             // Search for user in the list
@@ -27,24 +27,24 @@ public class Login {
             }
             if (currentUser != null)
                 break; // found matching user
-            JOptionPane.showMessageDialog(null, "❌ Username is incorrect or does not exist. Please try again.");
+            JOptionPane.showMessageDialog(null, " Username is incorrect or does not exist. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         // Prompt for password until match found
         while (true) {
-            password = JOptionPane.showInputDialog("Enter your password:");
+            password = JOptionPane.showInputDialog(null,"Enter your password:","User input", JOptionPane.QUESTION_MESSAGE );
             if (password == null) { // handle cancel
-                JOptionPane.showMessageDialog(null, "Login canceled.");
+                JOptionPane.showMessageDialog(null, "Login canceled.", "System Notification", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             if (password.equals(currentUser.getPassword()))
                 break;
-            JOptionPane.showMessageDialog(null, "❌ Password is incorrect. Please try again.");
+            JOptionPane.showMessageDialog(null, " Password is incorrect. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         // Successful login message
         JOptionPane.showMessageDialog(null,
-                "✅ Login Successful!\n Welcome " + currentUser.getFirstName() + " " + currentUser.getLastName());
+                " Login Successful!\n Welcome " + currentUser.getFirstName() + " " + currentUser.getLastName()," Login", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Static Phone Number Validation Logic

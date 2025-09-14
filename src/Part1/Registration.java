@@ -55,11 +55,11 @@ public class Registration {
     // Start Registration process
     public void startUserRegistration() {
 
-        String firstName = JOptionPane.showInputDialog("Please enter your first name");
+        String firstName = JOptionPane.showInputDialog(null,"Please enter your first name","User input", JOptionPane.QUESTION_MESSAGE   );
         if (firstName == null)
             return; // user cancelled
 
-        String lastName = JOptionPane.showInputDialog("Please enter your last name");
+        String lastName = JOptionPane.showInputDialog(null,"Please enter your last name","User input", JOptionPane.QUESTION_MESSAGE   );
         if (lastName == null)
             return; // user cancelled
 
@@ -90,23 +90,23 @@ public class Registration {
 
         // Show successful registration message (without password for security)
         JOptionPane.showMessageDialog(null,
-                "✅ Registration Successful!\n" +
+                
                         "First Name: " + firstName + "\n" +
                         "Last Name: " + lastName + "\n" +
                         "Username: " + username + "\n" +
-                        "Phone: " + phoneNumber);
+                        "Phone: " + phoneNumber ," Registration Successful!", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Username validation with loop
     private String retrieveValidUsername() {
         String username;
         do {
-            username = JOptionPane.showInputDialog(
-                    "Enter username (-must contain an underscore \n -must be no more than five characters long):");
+            username = JOptionPane.showInputDialog(null,
+                    "Enter username (-must contain an underscore \n -must be no more than five characters long):","User input", JOptionPane.QUESTION_MESSAGE   );
             if (username == null)
                 return null; // handle cancel
             if (!Login.checkUserName(username)) {
-                JOptionPane.showMessageDialog(null, "❌ Invalid username. Must contain '_' and be ≤ 5 characters.");
+                JOptionPane.showMessageDialog(null, " Invalid username. Must contain '_' and be ≤ 5 characters.");
                 username = null; // force retry
             }
         } while (username == null);
@@ -117,12 +117,12 @@ public class Registration {
     private String retrieveValidPassword() {
         String password;
         do {
-            password = JOptionPane.showInputDialog(
-                    "Enter password (≥8 chars, must contain uppercase, number, special char):");
+            password = JOptionPane.showInputDialog(null,
+                    "Enter password (≥8 chars, must contain uppercase, number, special char):","User input", JOptionPane.QUESTION_MESSAGE   );
             if (password == null)
                 return null; // handle cancel
             if (!Login.checkPasswordComplexity(password)) {
-                JOptionPane.showMessageDialog(null, "❌ Password not complex enough. Try again.");
+                JOptionPane.showMessageDialog(null, " Password not complex enough. Try again.");
                 password = null; // force retry
             }
         } while (password == null);
@@ -133,12 +133,12 @@ public class Registration {
     private String retrieveValidPhoneNumber() {
         String phone;
         do {
-            phone = JOptionPane.showInputDialog(
-                    "Enter phone number (must start with +27 and be followed by 9 digits):");
+            phone = JOptionPane.showInputDialog(null,
+                    "Enter phone number (must start with +27 and be followed by 9 digits):","User input", JOptionPane.QUESTION_MESSAGE   );
             if (phone == null)
                 return null; // handle cancel
             if (!Login.checkCellPhoneNumber(phone)) {
-                JOptionPane.showMessageDialog(null, "❌ Invalid phone number format. Try again.");
+                JOptionPane.showMessageDialog(null, " Invalid phone number format. Try again.");
                 phone = null; // force retry
             }
         } while (phone == null);
