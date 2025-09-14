@@ -5,70 +5,80 @@ import javax.swing.JOptionPane;
 // Registration class to handle user registration with validations
 public class Registration {
     // User details
-    private String firstName;
-    private String lastName;
-    private String password; // stored but not displayed for security reasons
-    private String username;
-    private String phoneNumber; 
+    private String FirstName;
+    private String LastName;
+    private String Password; // stored but not displayed for security reasons
+    private String Username;
+    private String PhoneNumber;
 
     // Getters and Setters
     public String getFirstName() {
-        return firstName; 
+        return FirstName;
     }
-    public void setFirstName(String firstName) { 
-        this.firstName = firstName; 
+
+    public void setFirstName(String firstname) {
+        this.FirstName = firstname;
     }
 
     public String getLastName() {
-        return lastName; 
-    }
-    public void setLastName(String lastName) { 
-        this.lastName = lastName; 
-    }
-    
-    public String getPassword() { 
-        return password; 
-    }
-    public void setPassword(String password) { 
-        this.password = password; 
+        return LastName;
     }
 
-    public String getUsername() { 
-        return username; 
-    }
-    public void setUsername(String username) { 
-        this.username = username; 
+    public void setLastName(String lastname) {
+        this.LastName = lastname;
     }
 
-    public String getPhoneNumber() { 
-        return phoneNumber; 
+    public String getPassword() {
+        return Password;
     }
-    public void setPhoneNumber(String phoneNumber) { 
-        this.phoneNumber = phoneNumber; 
+
+    public void setPassword(String password) {
+        this.Password = password;
+    }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        this.Username = username;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.PhoneNumber = phoneNumber;
     }
 
     // Start Registration process
-    public void startRegistration() {
-        
+    public void startUserRegistration() {
+
         String firstName = JOptionPane.showInputDialog("Please enter your first name");
-        if (firstName == null) return; // user cancelled
+        if (firstName == null)
+            return; // user cancelled
 
         String lastName = JOptionPane.showInputDialog("Please enter your last name");
-        if (lastName == null) return; // user cancelled
+        if (lastName == null)
+            return; // user cancelled
 
         // Get username with validation
-        String username = getValidUsername();
-        if (username == null) return; // user cancelled
+        String username = retrieveValidUsername();
+        if (username == null)
+            return; // user cancelled
         JOptionPane.showMessageDialog(null, "Username successfully captured");
 
         // Get password with validation
-        String password = getValidPassword();
-        if (password == null) return; // user cancelled
+        String password = retrieveValidPassword();
+        if (password == null)
+            return; // user cancelled
         JOptionPane.showMessageDialog(null, "Password successfully captured");
 
         // Get phone number with validation
-        String phoneNumber = getValidPhoneNumber();
-        if (phoneNumber == null) return; // user cancelled
+        String phoneNumber = retrieveValidPhoneNumber();
+        if (phoneNumber == null)
+            return; // user cancelled
         JOptionPane.showMessageDialog(null, "Cell phone number successfully added");
 
         // Store details in instance variables
@@ -88,12 +98,13 @@ public class Registration {
     }
 
     // Username validation with loop
-    private String getValidUsername() {
+    private String retrieveValidUsername() {
         String username;
         do {
             username = JOptionPane.showInputDialog(
                     "Enter username (-must contain an underscore \n -must be no more than five characters long):");
-            if (username == null) return null; // handle cancel
+            if (username == null)
+                return null; // handle cancel
             if (!Login.checkUserName(username)) {
                 JOptionPane.showMessageDialog(null, "❌ Invalid username. Must contain '_' and be ≤ 5 characters.");
                 username = null; // force retry
@@ -103,12 +114,13 @@ public class Registration {
     }
 
     // Password validation with loop
-    private String getValidPassword() {
+    private String retrieveValidPassword() {
         String password;
         do {
             password = JOptionPane.showInputDialog(
                     "Enter password (≥8 chars, must contain uppercase, number, special char):");
-            if (password == null) return null; // handle cancel
+            if (password == null)
+                return null; // handle cancel
             if (!Login.checkPasswordComplexity(password)) {
                 JOptionPane.showMessageDialog(null, "❌ Password not complex enough. Try again.");
                 password = null; // force retry
@@ -118,12 +130,13 @@ public class Registration {
     }
 
     // Phone number validation with loop
-    private String getValidPhoneNumber() {
+    private String retrieveValidPhoneNumber() {
         String phone;
         do {
             phone = JOptionPane.showInputDialog(
                     "Enter phone number (must start with +27 and be followed by 9 digits):");
-            if (phone == null) return null; // handle cancel
+            if (phone == null)
+                return null; // handle cancel
             if (!Login.checkCellPhoneNumber(phone)) {
                 JOptionPane.showMessageDialog(null, "❌ Invalid phone number format. Try again.");
                 phone = null; // force retry

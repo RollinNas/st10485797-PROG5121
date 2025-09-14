@@ -25,7 +25,8 @@ public class Login {
                     break;
                 }
             }
-            if (currentUser != null) break; // found matching user
+            if (currentUser != null)
+                break; // found matching user
             JOptionPane.showMessageDialog(null, "❌ Username is incorrect or does not exist. Please try again.");
         }
 
@@ -36,7 +37,8 @@ public class Login {
                 JOptionPane.showMessageDialog(null, "Login canceled.");
                 return;
             }
-            if (password.equals(currentUser.getPassword())) break;
+            if (password.equals(currentUser.getPassword()))
+                break;
             JOptionPane.showMessageDialog(null, "❌ Password is incorrect. Please try again.");
         }
 
